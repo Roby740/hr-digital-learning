@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HR Digital Learning</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#20304a}
+header{background:#142b49;color:white;padding:20px}
+header h2{margin:0}
+header p{margin:7px 0 0;color:#bdd2ed;font-size:13px}
+nav{display:flex;gap:7px;overflow-x:auto;background:white;padding:12px;position:sticky;top:0;z-index:2}
+button{cursor:pointer;border:0;border-radius:8px;padding:11px 14px;background:#3978dc;color:white;font-weight:600}
+nav button{background:#edf2fa;color:#345}
+nav button.active{background:#3978dc;color:white}
+main{max-width:1000px;margin:auto;padding:20px}
+.hero{background:linear-gradient(120deg,#142b49,#3978dc);padding:28px;border-radius:16px;color:white}
+.hero h1{font-size:28px}
+.card{background:white;padding:19px;border-radius:13px;margin:14px 0;box-shadow:0 3px 12px #152d4910}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.number{font-size:27px;color:#3978dc;font-weight:bold}
+.small{font-size:13px;color:#7b8798}
+.bar{height:10px;background:#e8edf4;border-radius:10px;overflow:hidden}
+.bar div{height:100%;background:#3978dc}
+.item{border:1px solid #e5eaf1;padding:14px;border-radius:10px;margin:10px 0}
+.tag{color:#3978dc;font-size:12px;font-weight:bold}
+input[type=radio],input[type=checkbox]{width:auto}
+.option{display:block;background:#f3f6fb;padding:12px;margin:8px 0;border-radius:8px}
+textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:8px}
+footer{text-align:center;padding:25px;color:#8793a3}
+@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}main{padding:12px}.hero h1{font-size:23px}}
+</style>
+</head>
+<body>
+<header>
+<h2>🎓 HR DIGITAL LEARNING</h2>
+<p>Digitalisasi dan Analitik Sumber Daya Manusia</p>
+</header>
+<nav>
+<button class="active" onclick="page('home',this)">Dashboard</button>
+<button onclick="page('materi',this)">Materi</button>
+<button onclick="page('kuis',this)">Kuis</button>
+<button onclick="page('uts',this)">UTS</button>
+<button onclick="page('uas',this)">UAS</button>
+<button onclick="page('tugas',this)">Tugas</button>
+<button onclick="page('nilai',this)">Nilai</button>
+</nav>
+<main id="app"></main>
+<footer>HR Digital Learning © 2026</footer>
+<script>
+const data=[
+["Pengantar Digitalisasi SDM","Digitalisasi SDM adalah pemanfaatan teknologi digital untuk meningkatkan efisiensi pengelolaan karyawan. Contohnya absensi online, payroll, rekrutmen digital, dan penilaian kinerja.","Sebutkan tiga contoh digitalisasi SDM."],
+["Transformasi Digital SDM","Transformasi digital adalah perubahan proses, budaya, dan strategi organisasi melalui teknologi. Perusahaan perlu menyiapkan infrastruktur, keterampilan digital, dan manajemen perubahan.","Jelaskan tiga tantangan transformasi digital."],
+["Human Resource Information System","HRIS merupakan sistem informasi untuk mengelola data karyawan, absensi, payroll, rekrutmen, dan kinerja secara terintegrasi.","Buat rancangan fitur HRIS sederhana."],
+["Digital Recruitment","Digital recruitment menggunakan teknologi untuk mencari, menyeleksi, dan merekrut kandidat. ATS membantu HR melacak lamaran dan tahapan seleksi.","Jelaskan proses rekrutmen digital."],
+["Digital Performance Management","Performance management mengukur pencapaian karyawan melalui KPI. Contohnya target penjualan, produktivitas, ketepatan waktu, dan kepuasan pelanggan.","Buat lima contoh KPI karyawan."],
+["Digital Learning and Development","Digital learning menggunakan teknologi untuk pelatihan karyawan. LMS membantu mengelola materi, peserta, evaluasi, dan kemajuan pembelajaran.","Rancang program e-learning."],
+["Digital Compensation and Payroll","Payroll merupakan pengelolaan gaji, tunjangan, bonus, lembur, dan potongan. Gaji bersih adalah total pendapatan dikurangi potongan.","Hitung simulasi gaji tiga karyawan."],
+["Ujian Tengah Semester","UTS mengevaluasi pemahaman materi sesi 1 sampai 7, termasuk digitalisasi, HRIS, recruitment, KPI, learning, dan payroll.","Kerjakan ujian tengah semester."],
+["HR Analytics dan People Analytics","HR Analytics menggunakan data untuk membantu keputusan SDM. Analitik terdiri dari descriptive, diagnostic, predictive, dan prescriptive.","Berikan contoh empat jenis analitik."],
+["HR Data Management","Data SDM mencakup identitas, jabatan, absensi, gaji, kinerja, dan pelatihan. Kualitas data harus akurat, lengkap, konsisten, dan relevan.","Buat database simulasi karyawan."],
+["Statistik untuk Analitik SDM","Statistik membantu menganalisis mean, median, modus, persentase, dan standar deviasi untuk memahami pola data karyawan.","Hitung rata-rata absensi lima karyawan."],
+["Workforce Analytics","Workforce analytics membantu merencanakan jumlah karyawan, kebutuhan tenaga kerja, dan produktivitas. Produktivitas dapat dihitung dari output dibagi jumlah tenaga kerja.","Analisis produktivitas perusahaan."],
+["Employee Engagement dan Turnover","Engagement mengukur keterlibatan karyawan. Turnover mengukur pergantian karyawan. Rumus turnover adalah jumlah karyawan keluar dibagi rata-rata karyawan dikali 100%.","Analisis penyebab turnover."],
+["Artificial Intelligence dalam HR","AI dapat membantu seleksi kandidat, chatbot HR, rekomendasi pelatihan, dan analisis tenaga kerja. Penggunaannya perlu memperhatikan bias dan keamanan data.","Jelaskan manfaat dan risiko AI."],
+["Etika dan Keamanan Data SDM","Data pribadi karyawan harus dilindungi melalui pembatasan akses, tujuan penggunaan yang sah, keamanan penyimpanan, dan kepatuhan terhadap UU Perlindungan Data Pribadi.","Buat kebijakan perlindungan data."],
+["UAS dan Proyek Akhir","Proyek akhir mengintegrasikan seluruh materi. Mahasiswa mengumpulkan data simulasi, mengolahnya, membuat grafik, menganalisis temuan, dan menyusun rekomendasi.","Buat laporan analitik SDM."]
+];
+const questions=[
+["Apa tujuan digitalisasi SDM?",["Menghapus fungsi HR","Meningkatkan efisiensi HR","Menghilangkan seluruh karyawan","Menghapus manajemen"],1],
+["Apa kepanjangan HRIS?",["Human Resource Information System","Human Recruitment Internal Service","Human Relations Internet System","Human Resource Integration Strategy"],0],
+["Apa fungsi ATS?",["Menghitung gaji","Melacak lamaran kandidat","Mengukur absensi","Mengelola tunjangan"],1],
+["Apa kepanjangan KPI?",["Key Performance Indicator","Knowledge Process Integration","Key Personnel Information","Knowledge Performance Index"],0],
+["Apa fungsi LMS?",["Mengelola pembelajaran","Mengelola gaji","Mengelola penjualan","Mengelola absensi"],0],
+["Penjualan Rp80 juta dari target Rp100 juta menghasilkan KPI?",["60%","70%","80%","90%"],2],
+["HR Analytics berfokus pada?",["Analisis data SDM","Desain produk","Pemasaran","Produksi"],0],
+["Turnover adalah?",["Jumlah pelatihan","Pergantian karyawan","Jumlah penjualan","Jumlah pelanggan"],1],
+["AI dalam HR dapat membantu?",["Analisis kandidat","Menghapus keputusan manusia","Menghilangkan keamanan data","Menghapus pelatihan"],0],
+["Prinsip perlindungan data adalah?",["Akses bebas","Data tanpa pengamanan","Akses sesuai kewenangan","Data dibagikan bebas"],2]
+];
+let s=JSON.parse(localStorage.getItem("hrdl")||'{"done":[],"tasks":{},"scores":{}}');
+function save(){localStorage.setItem("hrdl",JSON.stringify(s))}
+function page(p,b){
+document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+if(b)b.classList.add("active");
+if(p==="home")home();
+if(p==="materi")materi();
+if(p==="kuis")exam("kuis");
+if(p==="uts")exam("uts");
+if(p==="uas")exam("uas");
+if(p==="tugas")tugas();
+if(p==="nilai")nilai();
+}
+function home(){
+let n=s.done.length;
+app.innerHTML=`<div class="hero"><h1>Selamat Datang! 👋</h1><p>Selamat belajar di HR Digital Learning.</p><button onclick="page('materi')">Mulai Belajar →</button></div>
+<div class="grid">
+<div class="card"><div class="number">16</div>Total Sesi</div>
+<div class="card"><div class="number">${n}</div>Sesi Selesai</div>
+<div class="card"><div class="number">${Math.round(n/16*100)}%</div>Progres</div></div>
+<div class="card"><h3>Progres Pembelajaran</h3><div class="bar"><div style="width:${n/16*100}%"></div></div><p class="small">${n} dari 16 sesi selesai.</p></div>
+<div class="card"><h3>Selamat belajar!</h3>Pelajari materi, kerjakan tugas, ikuti kuis dan ujian untuk mengembangkan kemampuan analitik SDM.</div>`;
+}
+function materi(){
+let h="<h1>Materi Perkuliahan</h1><p>16 sesi pembelajaran</p>";
+data.forEach((d,i)=>h+=`<div class="item"><span class="tag">SESI ${i+1}</span><h3>${d[0]}</h3><p>${d[1].slice(0,100)}...</p><button onclick="detail(${i})">Pelajari</button> ${s.done.includes(i)?"✓ Selesai":""}</div>`);
+app.innerHTML=h;
+}
+function detail(i){
+let d=data[i];
+app.innerHTML=`<button onclick="page('materi')">← Kembali</button><div class="card"><span class="tag">SESI ${i+1}</span><h1>${d[0]}</h1><h3>Materi pembelajaran</h3><p style="line-height:1.8">${d[1]}</p><h3>Latihan</h3><p>${d[2]}</p><button onclick="s.done.includes(${i})?null:s.done.push(${i});save();detail(${i})">Tandai selesai ✓</button></div>`;
+}
+function exam(type){
+let arr=type==="uts"?questions.slice(0,5):type==="uas"?questions.slice(5):questions;
+let h=`<h1>${type.toUpperCase()}</h1><p>Jawab seluruh pertanyaan berikut.</p><form id="form">`;
+arr.forEach((q,i)=>{
+h+=`<div class="card"><b>${i+1}. ${q[0]}</b>`;
+q[1].forEach((o,j)=>h+=`<label class="option"><input type="radio" name="q${i}" value="${j}" required> ${o}</label>`);
+h+="</div>";
+});
+app.innerHTML=h+`<button type="submit">Kirim Jawaban</button></form><div id="hasil"></div>`;
+document.getElementById("form").onsubmit=e=>{
+e.preventDefault();let f=new FormData(e.target),score=0;
+arr.forEach((q,i)=>{if(Number(f.get("q"+i))===q[2])score++});
+let v=Math.round(score/arr.length*100);
+s.scores[type]=v;save();
+document.getElementById("hasil").innerHTML=`<div class="card"><h2>Nilai Anda: ${v}</h2><p>${score} dari ${arr.length} jawaban benar.</p></div>`;
+};
+}
+function tugas(){
+let h="<h1>Tugas Perkuliahan</h1>";
+data.forEach((d,i)=>h+=`<div class="item"><b>Sesi ${i+1}: ${d[0]}</b><p>${d[2]}</p><label><input type="checkbox" ${s.tasks[i]?"checked":""} onchange="s.tasks[${i}]=this.checked;save()"> Selesai</label></div>`);
+app.innerHTML=h;
+}
+function nilai(){
+app.innerHTML=`<h1>Hasil Belajar</h1><div class="grid">
+${["kuis","uts","uas"].map(x=>`<div class="card"><h3>${x.toUpperCase()}</h3><div class="number">${s.scores[x]===undefined?"-":s.scores[x]+"%"}</div></div>`).join("")}
+</div><div class="card"><h3>Rekap Belajar</h3>Materi selesai: ${s.done.length}/16<br>Tugas selesai: ${Object.values(s.tasks).filter(Boolean).length}/16</div>`;
+}
+home();
+</script>
+</body>
+</html>
+
